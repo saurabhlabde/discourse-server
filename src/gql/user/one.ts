@@ -14,9 +14,11 @@ export class OneUserResolver {
 
                 const { username } = userInput
 
+                let errors = []
+
                 if (!username) {
                         const message_ = throwMessage({
-                                errors: [],
+                                errors,
                                 message: "User not found",
                                 type: "error"
                         })
@@ -31,6 +33,16 @@ export class OneUserResolver {
                                 username
                         }
                 })
+
+                if (!res) {
+                        const message_ = throwMessage({
+                                errors,
+                                message: "User not found",
+                                type: "error"
+                        })
+
+                        throw new UserInputError('NOT_FOUND', { message_ })
+                }
 
                 return res
         }
