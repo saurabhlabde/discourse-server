@@ -18,6 +18,9 @@ export class User {
         email: string
 
         @Field()
+        phoneNumber?: number
+
+        @Field()
         status: string
 
         @Field()
