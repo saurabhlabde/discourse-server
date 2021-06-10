@@ -59,7 +59,7 @@ export class RegisterResolver {
                                 username,
                                 email,
                                 status,
-                                profileImage: "",
+                                profileImage: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.GZ9KqCCy36KIdlIlYE7tuAHaHZ%26pid%3DApi&f=1",
                                 password: passwordHash
                         },
                 })

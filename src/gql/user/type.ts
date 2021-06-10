@@ -7,3 +7,10 @@ export class UserInput {
         username: string
 
 }
+
+@InputType()
+export class SearchInput {
+        @Field()
+        query: string
+}
+
