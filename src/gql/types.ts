@@ -30,7 +30,25 @@ export class User {
         createdAt: string
 
         @Field(type => [Message])
-        Message: Message[]
+        Message?: Message[]
+
+        @Field(type => [Tokens])
+        Tokens?: Tokens[]
+}
+
+@ObjectType()
+export class Tokens {
+        @Field()
+        id: number
+
+        @Field()
+        userId: number
+
+        @Field()
+        token: string
+
+        @Field()
+        createdAt: string
 }
 
 @ObjectType()
@@ -48,7 +66,7 @@ export class Room {
         createdAt: string
 
         @Field(type => [Message])
-        Message: Message[]
+        Message?: Message[]
 }
 
 @ObjectType()
@@ -73,4 +91,7 @@ export class Message {
 
         @Field()
         createdAt: string
+
+        @Field(of => User)
+        User?: User
 }
