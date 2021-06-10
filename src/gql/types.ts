@@ -21,6 +21,9 @@ export class User {
         phoneNumber?: number
 
         @Field()
+        profileImage: string
+
+        @Field()
         status: string
 
         @Field()

@@ -59,6 +59,7 @@ export class RegisterResolver {
                                 username,
                                 email,
                                 status,
+                                profileImage: "",
                                 password: passwordHash
                         },
                 })

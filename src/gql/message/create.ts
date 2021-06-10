@@ -31,10 +31,13 @@ export class CreateMessageResolver {
         message: "Room user not found",
         type: "error"
       })
+      
       throw new UserInputError('NOT_FOUND', { message_ })
     }
 
-    const resFindRoom: any = await prisma.room.findFirst({
+    let resFindRoomOrCreate: any;
+
+    resFindRoomOrCreate = await prisma.room.findFirst({
       where: {
         OR: [
           {
@@ -49,19 +52,30 @@ export class CreateMessageResolver {
       }
     })
 
-    if (!resFindRoom) {
-      await prisma.room.create({
+    if (!resFindRoomOrCreate) {
+      resFindRoomOrCreate = await prisma.room.create({
         data: {
           roomUsername: roomUser.username,
           username: auth.username,
         }
       })
+      await prisma.userId.createMany({
+        data: [
+          {
+            roomId: resFindRoomOrCreate.id,
+            userId: auth.id
+          }, {
+            roomId: resFindRoomOrCreate.id,
+            userId: roomUser.id
+          }
+        ]
+      })
     }
 
-    const resCreateRoom: any = await prisma.message.create({
+    const resCreateMessage: any = await prisma.message.create({
       data: {
         userId: auth.id,
-        roomId: resFindRoom.id,
+        roomId: resFindRoomOrCreate.id,
         text,
         media,
         status: "UNDELIVERED",
@@ -70,7 +84,7 @@ export class CreateMessageResolver {
       }
     })
 
-    if (!resCreateRoom) {
+    if (!resCreateMessage) {
       const message_ = throwMessage({
         errors,
         message: "Message create failed",
@@ -79,7 +93,6 @@ export class CreateMessageResolver {
       throw new UserInputError('ERROR', { message_ })
     }
 
-    return resCreateRoom
-
+    return resCreateMessage
   }
 }

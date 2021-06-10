@@ -11,18 +11,21 @@ generator client {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  firstname   String
-  lastname    String
-  username    String    @unique
-  email       String    @unique
-  password    String
-  status      String
-  phoneNumber Int?
-  createdAt   DateTime  @default(now())
-  Message     Message[]
-  Tokens      Tokens[]
+  id           Int       @id @default(autoincrement())
+  firstname    String
+  lastname     String
+  username     String    @unique
+  email        String    @unique
+  password     String
+  profileImage String
+  status       String
+  phoneNumber  Int?
+  createdAt    DateTime  @default(now())
+  Message      Message[]
+  Tokens       Tokens[]
 
+  Room   Room[]
+  UserId UserId[]
   @@map("user")
 }
 
@@ -42,8 +45,22 @@ model Room {
   roomUsername String
   createdAt    DateTime  @default(now())
   Message      Message[]
+  UserId       UserId[]
 
+
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
   @@map("room")
+}
+
+model UserId {
+  id     Int   @id @default(autoincrement())
+  User   User  @relation(fields: [userId], references: [id])
+  userId Int
+  Room   Room? @relation(fields: [roomId], references: [id])
+  roomId Int?
+
+  @@map("userId")
 }
 
 model Message {
