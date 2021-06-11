@@ -32,6 +32,9 @@ export class User {
         @Field()
         createdAt: string
 
+        @Field()
+        createdAtIso: string
+
         @Field(type => [Message])
         Message?: Message[]
 
@@ -52,6 +55,9 @@ export class Tokens {
 
         @Field()
         createdAt: string
+
+        @Field()
+        createdAtIso: string
 }
 
 @ObjectType()
@@ -67,6 +73,9 @@ export class Room {
 
         @Field()
         createdAt: string
+
+        @Field()
+        createdAtIso: string
 
         @Field(type => [Message])
         Message?: Message[]
@@ -94,6 +103,9 @@ export class Message {
 
         @Field()
         createdAt: string
+
+        @Field()
+        createdAtIso: string
 
         @Field(of => User)
         User?: User

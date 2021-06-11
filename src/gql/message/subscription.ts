@@ -57,8 +57,12 @@ export class MessageSubscriptionResolver {
                                 Message: {
                                         include: {
                                                 User: true
+                                        },
+                                        orderBy: {
+                                                createdAt: "asc"
                                         }
                                 },
+
                         }
                 })
 

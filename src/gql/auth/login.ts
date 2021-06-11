@@ -59,10 +59,12 @@ export class LoginResolver {
                         },
                         create: {
                                 userId: userExist.id,
+                                createdAtIso: new Date().toISOString(),
                                 token
                         },
                         update: {
-                                token
+                                createdAtIso: new Date().toISOString(),
+                                token,
                         }
                 })
 

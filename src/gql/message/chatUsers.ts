@@ -53,7 +53,14 @@ export class ChatUsers {
 
                         return chatUser.push({
                                 User,
-                                lastMessage
+                                lastMessage: lastMessage ? lastMessage : {
+                                        id: 0,
+                                        text: "",
+                                        status: "",
+                                        media: "",
+                                        createdAtIso: "",
+                                        createdAt: ""
+                                }
                         })
                 })
 

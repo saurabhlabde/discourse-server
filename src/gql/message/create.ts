@@ -57,13 +57,14 @@ export class CreateMessageResolver {
         data: {
           roomUsername: roomUser.username,
           username: auth.username,
+          createdAtIso: new Date().toISOString(),
         }
       })
       await prisma.userId.createMany({
         data: [
           {
             roomId: resFindRoomOrCreate.id,
-            userId: auth.id
+            userId: auth.id,
           }, {
             roomId: resFindRoomOrCreate.id,
             userId: roomUser.id
@@ -79,6 +80,7 @@ export class CreateMessageResolver {
         text,
         media,
         status: "UNDELIVERED",
+        createdAtIso: new Date().toISOString(),
       }, include: {
         User: true
       }

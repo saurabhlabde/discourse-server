@@ -20,7 +20,7 @@ export class RoomUsersType {
         User: User
 
         @Field(type => Message)
-        lastMessage: Message
+        lastMessage?: Message
 }
 
 @InputType()

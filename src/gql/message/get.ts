@@ -53,6 +53,9 @@ export class MessageResolver {
                                 Message: {
                                         include: {
                                                 User: true
+                                        },
+                                        orderBy: {
+                                                createdAt: "asc"
                                         }
                                 },
                         }

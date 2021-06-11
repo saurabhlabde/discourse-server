@@ -59,6 +59,7 @@ export class RegisterResolver {
                                 username,
                                 email,
                                 status,
+                                createdAtIso: new Date().toISOString(),
                                 profileImage: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.GZ9KqCCy36KIdlIlYE7tuAHaHZ%26pid%3DApi&f=1",
                                 password: passwordHash
                         },
@@ -75,6 +76,7 @@ export class RegisterResolver {
                         await prisma.tokens.create({
                                 data: {
                                         userId: res.id,
+                                        createdAtIso: new Date().toISOString(),
                                         token
                                 }
                         })
