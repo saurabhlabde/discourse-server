@@ -28,3 +28,13 @@ export class MessageInput {
         @Field()
         roomUsername: string
 }
+
+@InputType()
+export class MessageSubInput {
+        @Field()
+        username: string
+
+        @Field()
+        roomUsername: string
+}
+

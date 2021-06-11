@@ -1,5 +1,5 @@
 import { UserInputError } from "apollo-server-errors";
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { Arg, Ctx, ID, Mutation, Resolver } from "type-graphql";
 import { PrismaType } from "../..";
 import { throwMessage } from "../../utils/message";
 import { userCheck } from "../../utils/userCheck";
@@ -31,7 +31,7 @@ export class CreateMessageResolver {
         message: "Room user not found",
         type: "error"
       })
-      
+
       throw new UserInputError('NOT_FOUND', { message_ })
     }
 
@@ -92,6 +92,9 @@ export class CreateMessageResolver {
       })
       throw new UserInputError('ERROR', { message_ })
     }
+
+
+    await ctx.pubSub.publish("ADD_MESSAGES", { payload: resCreateMessage });
 
     return resCreateMessage
   }
