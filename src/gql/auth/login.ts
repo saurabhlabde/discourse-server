@@ -6,6 +6,7 @@ import { LoginInput } from './type'
 import { User } from '../types'
 import { throwMessage } from '../../utils/message'
 import { generateToken } from '../../utils/jwtTokenGenerate'
+import { validateLoginInput } from '../../utils/validation/user';
 
 Resolver(of => User)
 export class LoginResolver {
@@ -13,6 +14,16 @@ export class LoginResolver {
         @Mutation(returns => User)
         async login(@Arg('login') register: LoginInput, @Ctx() ctx: any) {
                 const { username, password } = register
+
+
+                const { valid, errors } = validateLoginInput({
+                        username,
+                        password,
+                });
+
+                if (!valid) {
+                        throw new UserInputError("ERRORS", { errors });
+                }
 
                 const prisma: PrismaType = ctx.prisma
 
@@ -22,7 +33,6 @@ export class LoginResolver {
                         }
                 })
 
-                let errors = [];
 
                 if (!userExist) {
                         const message_ = throwMessage({

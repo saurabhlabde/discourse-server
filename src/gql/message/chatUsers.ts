@@ -1,5 +1,7 @@
+import { UserInputError } from "apollo-server-errors";
 import { Ctx, Query, Resolver } from "type-graphql";
 import { PrismaType } from "../..";
+import { throwMessage } from "../../utils/message";
 import { userCheck } from "../../utils/userCheck";
 import { RoomUsersType } from "./type";
 
@@ -44,6 +46,18 @@ export class ChatUsers {
                                 }
                         }
                 })
+
+                const errors = []
+
+                if (!resFindRoom) {
+                        const message_ = throwMessage({
+                                errors,
+                                message: "Room not exist",
+                                type: "error",
+                        });
+
+                        throw new UserInputError("ERROR", { message_ });
+                }
 
                 const chatUser = []
 

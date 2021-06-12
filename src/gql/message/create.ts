@@ -3,6 +3,7 @@ import { Arg, Ctx, ID, Mutation, Resolver } from "type-graphql";
 import { PrismaType } from "../..";
 import { throwMessage } from "../../utils/message";
 import { userCheck } from "../../utils/userCheck";
+import { validateAddMessage } from "../../utils/validation/addMessage";
 import { Message } from "../types";
 import { CreateMessageInput } from './type'
 
@@ -15,6 +16,15 @@ export class CreateMessageResolver {
 
     const { roomUsername, media, text } = createInput
 
+    const { valid, errors } = validateAddMessage({
+      text,
+      image: media
+    });
+
+    if (!valid) {
+      throw new UserInputError("ERRORS", { errors });
+    }
+
     const prisma: PrismaType = ctx.prisma
 
     const roomUser = await prisma.user.findFirst({
@@ -23,7 +33,6 @@ export class CreateMessageResolver {
       }
     })
 
-    let errors = []
 
     if (!roomUser) {
       const message_ = throwMessage({
