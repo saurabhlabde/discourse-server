@@ -20,7 +20,7 @@ export class RegisterResolver {
                 });
 
                 if (!valid) {
-                        throw new UserInputError("ERRORS", { errors });
+                        throw new UserInputError("ERROR", { errors });
                 }
 
                 const prisma: PrismaType = ctx.prisma
@@ -39,7 +39,7 @@ export class RegisterResolver {
                                 type: "error",
                         });
 
-                        throw new UserInputError("EXIST", { message_ });
+                        throw new UserInputError("EXIST", { errors: message_ });
                 }
 
                 const emailExist: any = await prisma.user.findFirst({
@@ -48,6 +48,16 @@ export class RegisterResolver {
                         }
                 })
 
+                if (emailExist) {
+                        const message_ = throwMessage({
+                                errors,
+                                message: "Email id already exist please enter anther email id",
+                                type: "error",
+                        });
+
+                        throw new UserInputError("EXIST", { errors: message_ });
+                }
+
                 if (userExist) {
                         const message_ = throwMessage({
                                 errors,
@@ -55,7 +65,7 @@ export class RegisterResolver {
                                 type: "error",
                         });
 
-                        throw new UserInputError("EXIST", { message_ });
+                        throw new UserInputError("EXIST", { errors: message_ });
                 }
 
                 const passwordHash: string = await bycrypt.hash(password, 12);

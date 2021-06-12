@@ -22,7 +22,7 @@ export class LoginResolver {
                 });
 
                 if (!valid) {
-                        throw new UserInputError("ERRORS", { errors });
+                        throw new UserInputError("ERROR", { errors });
                 }
 
                 const prisma: PrismaType = ctx.prisma
@@ -33,27 +33,29 @@ export class LoginResolver {
                         }
                 })
 
+                let errorN = []
 
                 if (!userExist) {
-                        const message_ = throwMessage({
+                        const message = throwMessage({
                                 errors,
                                 message: "Invalid login",
                                 type: "error",
                         });
 
-                        throw new UserInputError("ERROR", { message_ });
+                        throw new UserInputError("ERROR", { errors: message });
                 }
+
 
                 const matchPassword: boolean = await bycrypt.compare(password, userExist.password);
 
                 if (!matchPassword) {
-                        const message_ = throwMessage({
+                        const message = throwMessage({
                                 errors,
                                 message: "Login failed, invalid login details",
                                 type: "error",
                         });
 
-                        throw new UserInputError("NOT_FOUND", { message_ });
+                        throw new UserInputError("NOT_FOUND", { errors: message });
                 }
 
                 const tokenUserInfo = {

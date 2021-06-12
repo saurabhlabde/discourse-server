@@ -2,6 +2,8 @@ import { handleString } from "./string";
 import { nanoid } from "nanoid";
 
 
+
+
 const stringNotEmpty = (name: string) => {
         const message = {
                 id: nanoid(),
@@ -29,6 +31,13 @@ interface IValidateRegisterInput {
         password: string;
 }
 
+interface IError {
+        id: string
+        message: string
+        type: string
+}
+
+
 export const validateRegisterInput = ({
         firstname,
         lastname,
@@ -37,7 +46,7 @@ export const validateRegisterInput = ({
         status,
         password,
 }: IValidateRegisterInput) => {
-        const errors: any = [];
+        let errors: Array<IError> = [];
 
         //   firstname
 
