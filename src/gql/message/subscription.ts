@@ -9,7 +9,7 @@ import { MessageSubInput } from "./type";
 @Resolver(of => Message)
 export class MessageSubscriptionResolver {
         @Subscription(() => [Message], {
-                topics: "ADD_MESSAGES",
+                topics: ["ADD_MESSAGES", "DELETE_MESSAGES", "LIKE_MESSAGES"],
         })
 
         async getMessageSub(@Arg('get') getInput: MessageSubInput, @Ctx() ctx: any,): Promise<any> {
@@ -56,7 +56,8 @@ export class MessageSubscriptionResolver {
                         select: {
                                 Message: {
                                         include: {
-                                                User: true
+                                                User: true,
+                                                Like: true,
                                         },
                                         orderBy: {
                                                 createdAt: "asc"

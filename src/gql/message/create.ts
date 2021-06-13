@@ -82,17 +82,19 @@ export class CreateMessageResolver {
       })
     }
 
+
     const resCreateMessage: any = await prisma.message.create({
       data: {
         userId: auth.id,
         roomId: resFindRoomOrCreate.id,
         text,
-        media,
+        media: media ? media : '',
         status: "UNDELIVERED",
         createdAtIso: new Date().toISOString(),
       }, include: {
-        User: true
-      }
+        User: true,
+        Like: true
+      },
     })
 
     if (!resCreateMessage) {
@@ -101,11 +103,11 @@ export class CreateMessageResolver {
         message: "Message create failed",
         type: "error"
       })
+
       throw new UserInputError('ERROR', { message_ })
     }
 
-
-    await ctx.pubSub.publish("ADD_MESSAGES", { payload: resCreateMessage });
+    await ctx.pubSub.publish("ADD_MESSAGES");
 
     return resCreateMessage
   }

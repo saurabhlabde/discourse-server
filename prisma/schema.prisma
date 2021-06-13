@@ -27,6 +27,7 @@ model User {
 
   Room   Room[]
   UserId UserId[]
+  Like   Like[]
   @@map("user")
 }
 
@@ -68,13 +69,26 @@ model UserId {
 
 model Message {
   id           Int      @id @default(autoincrement())
-  text         String
-  media        String
+  text         String?
+  media        String?
   status       String
   User         User     @relation(fields: [userId], references: [id])
   userId       Int
   Room         Room     @relation(fields: [roomId], references: [id])
   roomId       Int
+  Like         Like[]
   createdAtIso String   @default("")
   createdAt    DateTime @default(now())
+}
+
+model Like {
+  id           Int      @id @default(autoincrement())
+  User         User     @relation(fields: [userId], references: [id])
+  userId       Int
+  createdAtIso String   @default("")
+  createdAt    DateTime @default(now())
+  Message      Message? @relation(fields: [messageId], references: [id])
+  messageId    Int?
+
+  @@map("like")
 }

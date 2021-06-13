@@ -40,6 +40,12 @@ export class User {
 
         @Field(type => [Tokens])
         Tokens?: Tokens[]
+
+        @Field(type => [Like])
+        Like?: Like[]
+
+        @Field(type => [UserId])
+        UserId?: UserId[]
 }
 
 @ObjectType()
@@ -77,8 +83,42 @@ export class Room {
         @Field()
         createdAtIso: string
 
+        @Field(type => [UserId])
+        UserId?: UserId[]
+
         @Field(type => [Message])
         Message?: Message[]
+}
+
+@ObjectType()
+export class UserId {
+        @Field()
+        id: number
+
+        @Field()
+        userId: number
+
+        @Field()
+        roomId: number
+}
+
+
+@ObjectType()
+export class Like {
+        @Field()
+        id: number
+
+        @Field()
+        userId: number
+
+        @Field()
+        createdAtIso: string
+
+        @Field()
+        createdAt: string
+
+        @Field()
+        messageId?: number
 }
 
 @ObjectType()
@@ -87,10 +127,10 @@ export class Message {
         id: number
 
         @Field()
-        text: string
+        text?: string
 
         @Field()
-        media: string
+        media?: string
 
         @Field()
         status: string
@@ -100,6 +140,9 @@ export class Message {
 
         @Field()
         roomId: number
+
+        @Field(type => [Like])
+        Like?: Like[]
 
         @Field()
         createdAt: string

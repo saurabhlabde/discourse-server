@@ -7,10 +7,10 @@ export class CreateMessageInput {
         @Field()
         roomUsername: string
 
-        @Field()
+        @Field({ nullable: true })
         text?: string
 
-        @Field()
+        @Field({ nullable: true })
         media?: string
 }
 
@@ -38,3 +38,9 @@ export class MessageSubInput {
         roomUsername: string
 }
 
+
+@InputType()
+export class DeleteInput {
+        @Field()
+        id: number
+}

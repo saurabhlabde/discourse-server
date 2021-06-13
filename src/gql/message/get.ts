@@ -52,7 +52,8 @@ export class MessageResolver {
                         select: {
                                 Message: {
                                         include: {
-                                                User: true
+                                                User: true,
+                                                Like: true,
                                         },
                                         orderBy: {
                                                 createdAt: "asc"

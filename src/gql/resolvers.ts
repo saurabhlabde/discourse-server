@@ -8,6 +8,8 @@ import { OneUserResolver } from '../gql/user/one'
 import { SearchResolver } from '../gql/user/search'
 import { RecommendationResolver } from '../gql/user/recommendation'
 import { MessageSubscriptionResolver } from '../gql/message/subscription'
+import { DeleteMessageResolver } from '../gql/message/delete'
+import { LikeMessageResolver } from '../gql/message/like'
 
 export const resolvers = [
         UserResolver,
@@ -19,5 +21,7 @@ export const resolvers = [
         SearchResolver,
         RecommendationResolver,
         MessageSubscriptionResolver,
-        MessageResolver
+        MessageResolver,
+        DeleteMessageResolver,
+        LikeMessageResolver
 ] as const
