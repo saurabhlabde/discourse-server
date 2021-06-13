@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv";
 import "reflect-metadata";
+import * as dotenv from "dotenv";
 import { buildSchema } from "type-graphql";
 import { ApolloServer, PubSub } from "apollo-server";
 import { PrismaClient } from '@prisma/client'
