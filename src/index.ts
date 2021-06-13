@@ -1,6 +1,5 @@
 import * as dotenv from "dotenv";
 import "reflect-metadata";
-
 import { buildSchema } from "type-graphql";
 import { ApolloServer, PubSub } from "apollo-server";
 import { PrismaClient } from '@prisma/client'
@@ -8,7 +7,6 @@ import { PrismaClient } from '@prisma/client'
 dotenv.config();
 
 import { resolvers } from "./gql/resolvers";
-
 
 const prisma = new PrismaClient()
 
@@ -44,5 +42,7 @@ bootstrap().catch(e => {
         throw e
 })
         .finally(async () => {
-                await prisma.$disconnect()
+                await prisma.$disconnect().then(() => {
+                        console.log('disconnect prisma');
+                })
         })
