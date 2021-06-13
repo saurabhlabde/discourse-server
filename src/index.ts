@@ -10,9 +10,10 @@ import { resolvers } from "./gql/resolvers";
 
 const prisma = new PrismaClient()
 
+const pubSub = new PubSub();
+
 export type PrismaType = typeof prisma
 
-const pubSub = new PubSub();
 
 // config
 const PORT = process.env.PORT || 5000;
