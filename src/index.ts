@@ -14,16 +14,19 @@ const pubSub = new PubSub();
 
 export type PrismaType = typeof prisma
 
-
 // config
 const PORT = process.env.PORT || 5000;
 
 const bootstrap = async () => {
         const schema = await buildSchema({ resolvers, pubSub });
 
+        const node_env: string | null = process.env.NODE_ENV
+
+        const playground: boolean = node_env === 'development'
+
         const server = new ApolloServer({
                 schema,
-                playground: true,
+                playground: playground,
                 context: ({ res }) => ({ res, prisma, pubSub }),
                 tracing: true,
                 subscriptions: {
